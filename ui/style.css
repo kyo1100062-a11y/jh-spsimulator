@@ -140,7 +140,7 @@ section h3.table-title {
     text-align: right;
     padding: 0;
     margin: 0;
-    font-size: 13px;
+    font-size: 15px;
     color: var(--text-secondary);
 }
 
@@ -244,7 +244,7 @@ section h3.table-title {
 
 .korean-amount {
     color: var(--text-secondary);
-    font-size: 13px;
+    font-size: 15px;
     min-width: 100px;
     text-align: left;
 }
@@ -261,7 +261,7 @@ section h3.table-title {
 
 .percent-note {
     color: var(--warning-text);
-    font-size: 13px;
+    font-size: 15px;
     text-align: right;
 }
 
@@ -271,7 +271,7 @@ input[type="text"] {
     border: 1px solid var(--border-color);
     color: var(--text-primary);
     padding: 8px 12px;
-    font-size: 14px;
+    font-size: 16px;
     border-radius: 3px;
     transition: border-color 0.2s, background-color 0.2s;
     font-family: inherit;
@@ -344,7 +344,7 @@ input[type="text"].readonly:focus {
 
 .vat-refund-subtotal-label {
     color: var(--text-primary);
-    font-size: 14px;
+    font-size: 16px;
     font-weight: 500;
 }
 
@@ -456,7 +456,7 @@ input[type="text"].readonly:focus {
     width: 100%;
     border-collapse: collapse;
     margin-top: 0;
-    font-size: 13px;
+    font-size: 15px;
     table-layout: fixed;
 }
 

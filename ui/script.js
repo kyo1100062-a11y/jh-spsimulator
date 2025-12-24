@@ -129,6 +129,31 @@ function getPageId(prefix, id) {
     return `${prefix}-${id}`;
 }
 
+/**
+ * 보조사업자 입력값을 가져와 파일명에 사용할 수 있도록 정리
+ * @param {string} pagePrefix - 페이지 prefix
+ * @returns {string} 보조사업자명 (없으면 빈 문자열)
+ */
+function getSubsidyBusinessName(pagePrefix) {
+    const el = document.getElementById(getPageId(pagePrefix, 'subsidyBusiness'));
+    if (!el) return '';
+    return (el.value || '').trim();
+}
+
+/**
+ * PDF 저장 시 기본 파일명을 생성
+ * @param {string} pagePrefix - 페이지 prefix
+ * @param {boolean} isAllPages - 전체 페이지 여부
+ * @returns {string} 파일명
+ */
+function buildPdfFileName(pagePrefix, isAllPages = false) {
+    const base = '사업비산출내역';
+    const business = getSubsidyBusinessName(pagePrefix);
+    const suffix = business ? `_${business}` : '';
+    const allSuffix = isAllPages ? '_전체' : '';
+    return `${base}${suffix}${allSuffix}.pdf`;
+}
+
 // 계산 함수들 (페이지 prefix 지원)
 
 /**
@@ -1148,6 +1173,62 @@ function attachVatItemRowEventListeners(pagePrefix, rowNum) {
 // PDF 출력 함수들
 
 /**
+ * PDF를 "다른 이름으로 저장" 대화상자와 함께 저장
+ * @param {jsPDF} pdf - jsPDF 인스턴스
+ * @param {string} filename - 기본 파일명
+ */
+async function savePdfWithDialog(pdf, filename) {
+    try {
+        // PDF를 Blob으로 변환
+        const blob = pdf.output('blob');
+        
+        // File System Access API 지원 확인 (Chrome 86+, Edge 86+)
+        if ('showSaveFilePicker' in window) {
+            try {
+                const fileHandle = await window.showSaveFilePicker({
+                    suggestedName: filename,
+                    types: [{
+                        description: 'PDF 파일',
+                        accept: { 'application/pdf': ['.pdf'] }
+                    }]
+                });
+                
+                const writable = await fileHandle.createWritable();
+                await writable.write(blob);
+                await writable.close();
+                return;
+            } catch (error) {
+                // 사용자가 대화상자를 취소한 경우
+                if (error.name === 'AbortError') {
+                    return;
+                }
+                // 다른 오류가 발생한 경우 폴백 사용
+                console.warn('File System Access API 오류:', error);
+            }
+        }
+        
+        // 폴백: Blob URL을 사용하여 다운로드 (download 속성 없이)
+        const url = URL.createObjectURL(blob);
+        const link = document.createElement('a');
+        link.href = url;
+        // download 속성을 제거하여 브라우저의 기본 "다른 이름으로 저장" 동작 사용
+        // 브라우저 설정에 따라 다운로드 폴더에 저장되거나 대화상자가 열릴 수 있음
+        link.style.display = 'none';
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        
+        // Blob URL 정리 (약간의 지연 후)
+        setTimeout(() => {
+            URL.revokeObjectURL(url);
+        }, 100);
+    } catch (error) {
+        console.error('PDF 저장 중 오류 발생:', error);
+        throw error;
+    }
+}
+
+/**
  * 개별 페이지 PDF 출력
  * @param {number} pageNum - 출력할 페이지 번호
  */
@@ -1236,7 +1317,8 @@ async function exportPageToPdf(pageNum) {
             }
         }
         
-        pdf.save(`사업비_산출_보조금_계산서_페이지${pageNum}.pdf`);
+        const filename = buildPdfFileName(pagePrefix, false);
+        await savePdfWithDialog(pdf, filename);
         
         // PDF 출력 전용 모드 비활성화
         document.body.classList.remove('print-mode');
@@ -1351,7 +1433,9 @@ async function exportAllPagesToPdf() {
             }
         }
         
-        pdf.save('사업비_산출_보조금_계산서_전체.pdf');
+        // 전체 PDF 파일명: 첫 페이지 보조사업자명을 사용
+        const filename = buildPdfFileName('page1', true);
+        await savePdfWithDialog(pdf, filename);
         
         // PDF 출력 전용 모드 비활성화
         document.body.classList.remove('print-mode');
