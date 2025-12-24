@@ -1,0 +1,887 @@
+/* CSS 변수 - 기본(다크) 테마 색상 */
+:root {
+    --bg-primary: #1a1a1a;
+    --bg-secondary: #2d2d2d;
+    --bg-tertiary: #3a3a3a;
+    --bg-input: #252525;
+    --bg-readonly: #1f1f1f;
+    --text-primary: #e0e0e0;
+    --text-secondary: #b0b0b0;
+    --border-color: #404040;
+    --border-focus: #5a9;
+    --accent-color: #5a9;
+    --accent-hover: #6ba;
+    --error-color: #e55;
+
+    /* 의미 기반 색상 토큰 (다크 모드 값) */
+    --header-accent: #8B7D3A;
+    --page-border: rgba(255, 255, 255, 0.3);
+    --page-control-bg: #8B5CF6;
+    --page-control-bg-hover: #A78BFA;
+    --table-group-border: #FFFACD;
+    --danger-color: #e55;
+    --danger-hover: #f66;
+    --muted-button-bg: #6a6a6a;
+    --muted-button-bg-hover: #7a7a7a;
+    --warning-text: red;
+
+    /* 테마 토글 기본 색상 (다크 모드 기준) */
+    --theme-toggle-track-bg: #3a3a3a;
+    --theme-toggle-track-bg-active: #4FC3F7;
+    --theme-toggle-thumb-bg: #ffffff;
+}
+
+/* 라이트 테마 색상 - Soft White & Light Black 계열만 사용 */
+body[data-theme="light"] {
+    --bg-primary: #F7F7F7;
+    --bg-secondary: #FFFFFF;
+    --bg-tertiary: #EFEFEF;
+    --bg-input: #F7F7F7;
+    --bg-readonly: #F2F2F2;
+    --text-primary: #222222;
+    --text-secondary: #222222;
+    --border-color: rgba(0, 0, 0, 0.14);
+    --border-focus: rgba(0, 0, 0, 0.6);
+    --accent-color: #222222;
+    --accent-hover: #000000;
+    --error-color: #222222;
+
+    --header-accent: #222222;
+    --page-border: #000000;
+    --page-control-bg: #222222;
+    --page-control-bg-hover: #000000;
+    --table-group-border: rgba(0, 0, 0, 0.12);
+    --danger-color: #222222;
+    --danger-hover: #000000;
+    --muted-button-bg: #222222;
+    --muted-button-bg-hover: #000000;
+    --warning-text: #222222;
+    --theme-toggle-track-bg: #DDDDDD;
+    --theme-toggle-track-bg-active: #000000;
+    --theme-toggle-thumb-bg: #FFFFFF;
+}
+
+/* 기본 스타일 리셋 및 설정 */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+    line-height: 1.6;
+    padding: 20px;
+}
+
+.outer-frame {
+    border: 2px solid var(--border-color);
+    border-radius: 8px;
+    padding: 20px;
+    margin: 0 auto;
+    max-width: 1440px;
+    background-color: var(--bg-secondary);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+/* 라이트 모드에서 아웃프레임은 더 두껍고 진한 검정색 */
+body[data-theme="light"] .outer-frame {
+    border-width: 4px;
+    border-color: #000000;
+}
+
+.container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* 헤더 스타일 */
+header {
+    margin-bottom: 30px;
+    border-bottom: 2px solid var(--border-color);
+    padding-bottom: 15px;
+}
+
+header h1 {
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--header-accent);
+}
+
+/* 섹션 스타일 */
+section {
+    background-color: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+section h3 {
+    font-size: 15px;
+    font-weight: 600;
+    margin-bottom: 12px;
+    margin-top: 5px;
+    color: var(--text-secondary);
+}
+
+section h3.table-title {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--header-accent);
+    margin: 0;
+    padding: 0;
+}
+
+.unit-row {
+    text-align: right;
+    padding: 0;
+    margin: 0;
+    font-size: 13px;
+    color: var(--text-secondary);
+}
+
+/* 메타데이터 테이블 */
+.metadata-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.metadata-table td {
+    padding: 10px;
+    border: 1px solid var(--border-color);
+    background-color: var(--bg-readonly);
+}
+
+.metadata-table .metadata-label {
+    background-color: var(--bg-tertiary);
+    color: var(--text-secondary);
+    font-weight: 500;
+    width: 120px;
+    text-align: center;
+    padding-right: 15px;
+}
+
+.metadata-table input[type="text"] {
+    width: 100%;
+    border: 1px solid var(--border-color);
+    background-color: var(--bg-readonly);
+}
+
+.metadata-table input[type="text"]:focus {
+    background-color: var(--bg-readonly);
+    border: 1px solid var(--border-color);
+}
+
+/* 계산 요약 테이블 */
+.calculation-summary-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+
+.calculation-summary-table td {
+    padding: 12px;
+    border: 1px solid var(--border-color);
+}
+
+.calculation-summary-table .calc-label {
+    background-color: var(--bg-tertiary);
+    color: var(--text-primary);
+    font-weight: 500;
+    width: 250px;
+    text-align: center;
+    padding-right: 20px;
+    line-height: 1.5;
+}
+
+.calculation-summary-table .calc-value {
+    background-color: var(--bg-secondary);
+}
+
+.calculation-summary-table .readonly-cell {
+    background-color: var(--bg-readonly);
+}
+
+.calculation-summary-table input[type="text"] {
+    width: 300px;
+    border: 1px solid var(--border-focus);
+    background-color: var(--bg-readonly);
+    text-align: right;
+}
+
+.calculation-summary-table input[type="text"]:focus {
+    background-color: var(--bg-readonly);
+    border: 1px solid var(--border-focus);
+    border-radius: 3px;
+}
+
+/* 총사업비 입력 필드 배경색을 교부결정액과 동일하게 (연한녹색 테두리는 유지) */
+#totalCost {
+    background-color: var(--bg-readonly);
+}
+
+#totalCost:focus {
+    background-color: var(--bg-readonly);
+}
+
+.calculation-summary-table input[type="text"].readonly {
+    border: none;
+}
+
+.amount-input-group {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.amount-input-group input[type="text"] {
+    width: 300px;
+}
+
+.korean-amount {
+    color: var(--text-secondary);
+    font-size: 13px;
+    min-width: 100px;
+    text-align: left;
+}
+
+.project-cost-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.project-cost-wrapper input[type="text"] {
+    width: 300px;
+}
+
+.percent-note {
+    color: var(--warning-text);
+    font-size: 13px;
+    text-align: right;
+}
+
+/* 입력 필드 스타일 */
+input[type="text"] {
+    background-color: var(--bg-readonly);
+    border: 1px solid var(--border-color);
+    color: var(--text-primary);
+    padding: 8px 12px;
+    font-size: 14px;
+    border-radius: 3px;
+    transition: border-color 0.2s, background-color 0.2s;
+    font-family: inherit;
+}
+
+input[type="text"]:focus {
+    outline: none;
+    border-color: var(--border-focus);
+    background-color: var(--bg-readonly);
+}
+
+input[type="text"].readonly {
+    background-color: var(--bg-readonly);
+    border-color: var(--border-color);
+    cursor: not-allowed;
+    color: var(--text-secondary);
+}
+
+input[type="text"].readonly:focus {
+    border-color: var(--border-color);
+    background-color: var(--bg-readonly);
+}
+
+
+.toggle-label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+    color: var(--text-secondary);
+    cursor: pointer;
+}
+
+.toggle-label input[type="checkbox"] {
+    cursor: pointer;
+}
+
+/* 테이블 그룹 컨테이너 (연한 황색 박스) */
+.table-group-container {
+    margin-top: 25px;
+    margin-bottom: 25px;
+    background-color: transparent;
+    border: 1px solid var(--table-group-border);
+    border-radius: 4px;
+    padding: 12px;
+}
+
+.table-header-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2px;
+}
+
+/* 부가가치세 환급금 소계 및 행추가 버튼 컨테이너 */
+.vat-refund-controls {
+    margin-top: 12px;
+    padding-top: 8px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+}
+
+.vat-refund-subtotal {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.vat-refund-subtotal-label {
+    color: var(--text-primary);
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.vat-refund-subtotal-input {
+    width: 300px;
+    text-align: right;
+}
+
+/* 행추가/행삭제 버튼 컨테이너 */
+.vat-row-buttons {
+    display: flex;
+    gap: 10px;
+}
+
+/* 행추가 버튼 */
+.vat-add-row-btn {
+    background-color: var(--accent-color);
+    color: white;
+    border: none;
+    padding: 8px 20px;
+    font-size: 14px;
+    font-weight: 600;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    white-space: nowrap;
+}
+
+.vat-add-row-btn:hover {
+    background-color: var(--accent-hover);
+}
+
+.vat-add-row-btn:active {
+    transform: translateY(1px);
+}
+
+/* 행삭제 버튼 */
+.vat-delete-row-btn {
+    background-color: var(--danger-color);
+    color: white;
+    border: none;
+    padding: 8px 20px;
+    font-size: 14px;
+    font-weight: 600;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    white-space: nowrap;
+}
+
+.vat-delete-row-btn:hover {
+    background-color: var(--danger-hover);
+}
+
+.vat-delete-row-btn:active {
+    transform: translateY(1px);
+}
+
+.vat-delete-row-btn:disabled {
+    background-color: var(--muted-button-bg);
+    cursor: not-allowed;
+    opacity: 0.5;
+}
+
+/* 부가가치세 환급대상 품목 테이블 입력 필드 스타일 */
+.vatRefundItemsTable .vat-item-input {
+    background-color: var(--bg-primary);
+    border: 1px solid var(--bg-primary);
+    color: var(--text-primary);
+}
+
+.vatRefundItemsTable .vat-item-input:focus {
+    background-color: var(--bg-primary);
+    border: 1px solid var(--bg-primary);
+    outline: none;
+}
+
+/* 품목과 규격 입력 필드 가운데 정렬 */
+.vatRefundItemsTable .vat-item-center {
+    text-align: center !important;
+}
+
+.vatRefundItemsTable .vat-item-center::placeholder {
+    text-align: center;
+}
+
+/* 품목과 규격 입력 필드의 모든 상태에서 가운데 정렬 유지 */
+.vatRefundItemsTable td.align-center input.vat-item-center,
+.vatRefundItemsTable td.align-center input.vat-item-center:focus,
+.vatRefundItemsTable td.align-center input.vat-item-center::placeholder {
+    text-align: center !important;
+}
+
+/* 세액 항목 입력 필드 - 활성화 시 청록색 테두리 */
+.vatRefundItemsTable .vat-item-tax-input {
+    background-color: var(--bg-primary);
+    border: 1px solid var(--bg-primary);
+    color: var(--text-primary);
+}
+
+.vatRefundItemsTable .vat-item-tax-input:focus {
+    background-color: var(--bg-primary);
+    border: 1px solid var(--border-focus);
+    outline: none;
+}
+
+/* 테이블 스타일 */
+.data-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 0;
+    font-size: 13px;
+    table-layout: fixed;
+}
+
+/* 보조금 테이블과 자부담 테이블 열 너비 통일 설정 - 6개 열 모두 동일 */
+.data-table th,
+.data-table td {
+    width: 16.666%;
+}
+
+/* 보조금 테이블 열 너비 */
+#subsidyTable th:nth-child(1),
+#subsidyTable td:nth-child(1),
+#subsidyTable th:nth-child(2),
+#subsidyTable td:nth-child(2),
+#subsidyTable th:nth-child(3),
+#subsidyTable td:nth-child(3),
+#subsidyTable th:nth-child(4),
+#subsidyTable td:nth-child(4),
+#subsidyTable th:nth-child(5),
+#subsidyTable td:nth-child(5),
+#subsidyTable th:nth-child(6),
+#subsidyTable td:nth-child(6) {
+    width: 16.666%;
+}
+
+/* 자부담 테이블 열 너비 */
+#selfContributionTable th:nth-child(1),
+#selfContributionTable td:nth-child(1),
+#selfContributionTable th:nth-child(2),
+#selfContributionTable td:nth-child(2),
+#selfContributionTable th:nth-child(3),
+#selfContributionTable td:nth-child(3),
+#selfContributionTable th:nth-child(4),
+#selfContributionTable td:nth-child(4),
+#selfContributionTable th:nth-child(5),
+#selfContributionTable td:nth-child(5),
+#selfContributionTable th:nth-child(6),
+#selfContributionTable td:nth-child(6) {
+    width: 16.666%;
+}
+
+.data-table thead {
+    background-color: var(--bg-tertiary);
+}
+
+.data-table th {
+    padding: 10px 8px;
+    text-align: center;
+    font-weight: 600;
+    color: var(--text-primary);
+    border: 1px solid var(--border-color);
+}
+
+.data-table th.align-center {
+    text-align: center;
+}
+
+.data-table td {
+    padding: 8px;
+    border: 1px solid var(--border-color);
+    background-color: var(--bg-readonly);
+    text-align: right;
+}
+
+.data-table td.align-center {
+    text-align: center;
+}
+
+.data-table td input[type="text"] {
+    width: 100%;
+    border: 1px solid var(--border-color);
+    background-color: var(--bg-readonly);
+    padding: 4px 8px;
+    text-align: right;
+}
+
+.data-table td input[type="text"]:focus {
+    background-color: var(--bg-readonly);
+    border: 1px solid var(--border-focus);
+    border-radius: 3px;
+}
+
+/* 비 고 필드의 포커스 링 제거 (기본 상태와 포커스 상태 모두) */
+#ratioRemarks,
+#subsidyRemarks,
+#selfContributionRemarks {
+    border: 1px solid var(--border-color);
+}
+
+#ratioRemarks:focus,
+#subsidyRemarks:focus,
+#selfContributionRemarks:focus {
+    border: 1px solid var(--border-color);
+}
+
+/* 입력 가능한 필드들의 청록색 테두리 (총사업비와 동일) - 기본 상태에서도 청록색 */
+.data-table td input[id$="-nationalRatio"],
+.data-table td input[id$="-provincialRatio"],
+.data-table td input[id$="-cityRatio"],
+.data-table td input[id$="-matchingRatio"],
+.data-table td input[id$="-vatRefund"] {
+    border: 1px solid var(--border-focus);
+}
+
+.data-table td input[id$="-nationalRatio"]:focus,
+.data-table td input[id$="-provincialRatio"]:focus,
+.data-table td input[id$="-cityRatio"]:focus,
+.data-table td input[id$="-matchingRatio"]:focus,
+.data-table td input[id$="-vatRefund"]:focus {
+    border: 1px solid var(--border-focus);
+}
+
+.data-table td input[type="text"].readonly {
+    border: none;
+}
+
+.data-table td:has(input.readonly) {
+    background-color: var(--bg-readonly);
+}
+
+/* 통화 입력 필드 */
+.currency-input {
+    text-align: right;
+}
+
+.percent-input {
+    text-align: right;
+}
+
+/* 빨간색 텍스트 스타일 */
+#totalRatio {
+    color: var(--warning-text);
+}
+
+#matchingRatio {
+    color: var(--warning-text);
+}
+
+/* 검증 버튼 */
+.validation-section {
+    margin-top: 30px;
+    text-align: center;
+    padding-top: 20px;
+    border-top: 1px solid var(--border-color);
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.validate-button {
+    background-color: var(--accent-color);
+    color: white;
+    border: none;
+    padding: 12px 30px;
+    font-size: 15px;
+    font-weight: 600;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.validate-button:hover {
+    background-color: var(--accent-hover);
+}
+
+.validate-button:active {
+    transform: translateY(1px);
+}
+
+#refreshBtn {
+    background-color: var(--muted-button-bg);
+}
+
+#refreshBtn:hover {
+    background-color: var(--muted-button-bg-hover);
+}
+
+#exportPdfBtn {
+    background-color: var(--accent-color);
+}
+
+#exportPdfBtn:hover {
+    background-color: var(--accent-hover);
+}
+
+/* 반응형 디자인 */
+@media (max-width: 768px) {
+    .calculation-summary-table .calc-label {
+        width: 150px;
+        font-size: 13px;
+    }
+
+    .calculation-summary-table input[type="text"] {
+        width: 100%;
+    }
+
+    .payment-decision-controls {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+    }
+
+    .payment-decision-controls input[type="text"] {
+        width: 100%;
+    }
+
+    .metadata-table .metadata-label {
+        width: 80px;
+        font-size: 13px;
+    }
+
+    .data-table {
+        font-size: 12px;
+    }
+
+    .data-table th,
+    .data-table td {
+        padding: 6px 4px;
+    }
+}
+
+/* 커스텀 Alert 모달 스타일 */
+.alert-overlay {
+    position: fixed;
+    top:0; left:0; width:100%; height:100%;
+    background: rgba(0,0,0,0.55);
+    backdrop-filter: blur(3px);
+    display:flex; justify-content:center; align-items:center;
+    z-index:9999;
+}
+
+.alert-box {
+    background:var(--bg-secondary);
+    padding:25px 30px;
+    border-radius:8px;
+    border:1px solid var(--border-focus);
+    width:320px;
+    box-shadow:0 4px 20px rgba(0,0,0,0.4);
+    color:var(--text-primary);
+    text-align:center;
+}
+
+.alert-close-btn {
+    margin-top:18px;
+    padding:8px 20px;
+    border:none;
+    border-radius:4px;
+    background:var(--accent-color);
+    color:var(--text-primary);
+    cursor:pointer;
+}
+
+.hidden { display:none; }
+
+/* 원단위 경고 스타일 */
+.unit-warning {
+  color: var(--warning-text) !important;
+  font-weight:600;
+}
+
+/* PDF 출력 시 숨길 요소 */
+.print-hide {
+  display: none !important;
+}
+
+/* PDF 출력 전용 스타일 - input 요소 텍스트 잘림 방지 */
+body.print-mode input {
+  padding-top: 2px !important;
+  padding-bottom: 0 !important;
+  line-height: normal !important;
+  height: auto !important;
+  min-height: 32px;
+  vertical-align: top !important;
+}
+
+/* PDF 출력 전용 스타일 - textarea, select 요소 위쪽 정렬 */
+body.print-mode textarea,
+body.print-mode select {
+  vertical-align: top !important;
+}
+
+/* 페이지 관리 시스템 스타일 */
+.global-controls {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 20px;
+    padding: 15px;
+    background-color: var(--bg-tertiary);
+    border-radius: 4px;
+    flex-wrap: wrap;
+}
+
+/* 다크/라이트 모드 토글 스위치 */
+.theme-toggle {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+    color: var(--text-secondary);
+}
+
+.theme-toggle input {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+}
+
+.theme-toggle-track {
+    position: relative;
+    width: 44px;
+    height: 24px;
+    border-radius: 999px;
+    background-color: var(--theme-toggle-track-bg);
+    box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.4);
+    transition: background-color 0.2s ease;
+}
+
+.theme-toggle-thumb {
+    position: absolute;
+    top: 3px;
+    left: 3px;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background-color: var(--theme-toggle-thumb-bg);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    transition: transform 0.2s ease;
+}
+
+.theme-toggle input:checked + .theme-toggle-track {
+    background-color: var(--theme-toggle-track-bg-active);
+}
+
+.theme-toggle input:checked + .theme-toggle-track .theme-toggle-thumb {
+    transform: translateX(20px);
+}
+
+.theme-toggle-label {
+    color: var(--text-secondary);
+}
+
+.page-control-button {
+    background-color: var(--page-control-bg);
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 14px;
+    font-weight: 600;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.page-control-button:hover {
+    background-color: var(--page-control-bg-hover);
+}
+
+#pages {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+.page {
+    position: relative;
+    border: 4px solid var(--page-border);
+    border-radius: 4px;
+    padding: 20px;
+    background-color: var(--bg-secondary);
+}
+
+.page-header {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    margin-bottom: 20px;
+    padding-bottom: 15px;
+    border-bottom: 2px solid var(--border-color);
+}
+
+.page-number {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--header-accent);
+}
+
+.page-delete-btn,
+.page-reset-btn,
+.page-pdf-btn {
+    background-color: var(--muted-button-bg);
+    color: white;
+    border: none;
+    padding: 12px 30px;
+    font-size: 15px;
+    font-weight: 600;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.page-delete-btn:hover,
+.page-reset-btn:hover,
+.page-pdf-btn:hover {
+    background-color: var(--muted-button-bg-hover);
+}
+
+.page-delete-btn:disabled {
+    background-color: var(--muted-button-bg);
+    cursor: not-allowed;
+    opacity: 0.5;
+}
+
+.page-divider {
+    height: 2px;
+    background-color: var(--border-color);
+    margin-top: 30px;
+    margin-bottom: 0;
+}
+
+/* print-mode에서 페이지 관리 UI 숨기기 */
+body.print-mode .global-controls,
+body.print-mode .page-header,
+body.print-mode .page-divider,
+body.print-mode .validation-section {
+    display: none !important;
+}

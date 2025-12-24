@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>사업비 산출 및 보조금/자부담 계산 시뮬레이터</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="outer-frame">
+        <div class="container">
+        <header>
+            <h1>사업비 산출 및 보조금/자부담 계산 시뮬레이터</h1>
+        </header>
+
+        <!-- 전체 페이지 관리 버튼 -->
+        <div class="global-controls">
+            <button id="addPageBtn" class="page-control-button">페이지 추가</button>
+            <button id="resetAllBtn" class="page-control-button">전체 초기화</button>
+            <button id="exportAllPdfBtn" class="page-control-button">전체 PDF 출력</button>
+            <label class="theme-toggle">
+                <input type="checkbox" id="themeToggle">
+                <span class="theme-toggle-track">
+                    <span class="theme-toggle-thumb"></span>
+                </span>
+                <span class="theme-toggle-label">다크 모드</span>
+            </label>
+        </div>
+
+        <!-- 페이지 컨테이너 -->
+        <div id="pages">
+            <!-- 첫 번째 페이지 (템플릿) -->
+            <div class="page" data-page="1">
+                <!-- 페이지 헤더 -->
+                <div class="page-header">
+                    <span class="page-number">페이지 1</span>
+                </div>
+
+                <!-- 상단 메타데이터 입력 영역 -->
+                <section class="metadata-section">
+                    <table class="metadata-table">
+                        <tr>
+                            <td class="metadata-label">보조사업자</td>
+                            <td><input type="text" id="page1-subsidyBusiness" placeholder="보조사업자 입력"></td>
+                            <td class="metadata-label">소재지</td>
+                            <td><input type="text" id="page1-location" placeholder="소재지 입력"></td>
+                        </tr>
+                        <tr>
+                            <td class="metadata-label">사업내역</td>
+                            <td><input type="text" id="page1-businessDetails" placeholder="사업내역 입력"></td>
+                            <td class="metadata-label">업체명</td>
+                            <td><input type="text" id="page1-companyName" placeholder="업체명 입력"></td>
+                        </tr>
+                        <tr>
+                            <td class="metadata-label">비 고</td>
+                            <td colspan="3"><input type="text" id="page1-remarks" placeholder="비 고 입력"></td>
+                        </tr>
+                    </table>
+                </section>
+
+                <!-- 계산 구조 영역 -->
+                <section class="calculation-section">
+                    <!-- 기본 계산 항목 테이블 -->
+                    <table class="calculation-summary-table">
+                        <tr>
+                            <td class="calc-label">총 사업비</td>
+                            <td class="calc-value">
+                                <div class="amount-input-group">
+                                    <input type="text" id="page1-totalCost" class="currency-input" placeholder="0">
+                                    <span class="korean-amount" id="page1-totalCostKorean"></span>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="calc-label">교부결정액</td>
+                            <td class="calc-value readonly-cell">
+                                <div class="amount-input-group">
+                                    <input type="text" id="page1-paymentDecision" class="currency-input readonly" readonly>
+                                    <span class="korean-amount" id="page1-paymentDecisionKorean"></span>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="calc-label">사업비 산출금액<br>(부가세환급금 제외)</td>
+                            <td class="calc-value readonly-cell">
+                                <div class="amount-input-group">
+                                    <div class="project-cost-wrapper">
+                                        <input type="text" id="page1-projectCost" readonly class="readonly">
+                                        <span class="percent-note">*100%</span>
+                                    </div>
+                                    <span class="korean-amount" id="page1-projectCostKorean"></span>
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+
+                    <!-- 보조금 테이블 -->
+                    <div class="table-group-container">
+                        <div class="table-header-row">
+                            <h3 class="table-title">보조금액</h3>
+                            <div class="unit-row">[단위: 원]</div>
+                        </div>
+                        <table class="subsidyTable data-table">
+                            <thead>
+                                <tr>
+                                    <th class="align-center">구분</th>
+                                    <th class="align-center">소계</th>
+                                    <th class="align-center">국비</th>
+                                    <th class="align-center">도비</th>
+                                    <th class="align-center">시비</th>
+                                    <th class="align-center">비 고</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class="align-center">재원비율</td>
+                                    <td><input type="text" id="page1-totalRatio" readonly class="readonly"></td>
+                                    <td><input type="text" id="page1-nationalRatio" class="percent-input" placeholder="0%"></td>
+                                    <td><input type="text" id="page1-provincialRatio" class="percent-input" placeholder="0%"></td>
+                                    <td><input type="text" id="page1-cityRatio" class="percent-input" placeholder="0%"></td>
+                                    <td><input type="text" id="page1-ratioRemarks" placeholder=""></td>
+                                </tr>
+                                <tr>
+                                    <td class="align-center">사업비</td>
+                                    <td><input type="text" id="page1-subsidyTotal" readonly class="readonly"></td>
+                                    <td><input type="text" id="page1-nationalAmount" readonly class="readonly"></td>
+                                    <td><input type="text" id="page1-provincialAmount" readonly class="readonly"></td>
+                                    <td><input type="text" id="page1-cityAmount" readonly class="readonly"></td>
+                                    <td><input type="text" id="page1-subsidyRemarks" placeholder=""></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- 자부담 테이블 -->
+                    <div class="table-group-container">
+                        <div class="table-header-row">
+                            <h3 class="table-title">자부담금액</h3>
+                            <div class="unit-row">[단위: 원]</div>
+                        </div>
+                        <table class="selfContributionTable data-table">
+                            <thead>
+                                <tr>
+                                    <th class="align-center">소계</th>
+                                    <th class="align-center">자부담율 (보조금매칭)</th>
+                                    <th class="align-center">자부담 (보조금매칭)</th>
+                                    <th class="align-center">부가가치세 환급액</th>
+                                    <th class="align-center">기타 부담금</th>
+                                    <th class="align-center">비 고</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><input type="text" id="page1-selfContributionTotal" readonly class="readonly"></td>
+                                    <td><input type="text" id="page1-matchingRatio" class="percent-input" placeholder="0%"></td>
+                                    <td><input type="text" id="page1-matchingAmount" readonly class="readonly"></td>
+                                    <td><input type="text" id="page1-vatRefund" class="currency-input" placeholder="0"></td>
+                                    <td><input type="text" id="page1-otherExpenses" class="currency-input" placeholder="0"></td>
+                                    <td><input type="text" id="page1-selfContributionRemarks" placeholder=""></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- 부가가치세 환급대상 품목 테이블 -->
+                    <div class="table-group-container">
+                        <div class="table-header-row">
+                            <h3 class="table-title">부가가치세 환급대상 품목</h3>
+                            <div class="unit-row">[단위: 원]</div>
+                        </div>
+                        <table class="vatRefundItemsTable data-table" id="page1-vatRefundItemsTable">
+                            <thead>
+                                <tr>
+                                    <th class="align-center">품목</th>
+                                    <th class="align-center">규격</th>
+                                    <th class="align-center">단가</th>
+                                    <th class="align-center">수량</th>
+                                    <th class="align-center">공급가액</th>
+                                    <th class="align-center">세액</th>
+                                </tr>
+                            </thead>
+                            <tbody id="page1-vatRefundItemsTableBody">
+                                <tr>
+                                    <td class="align-center"><input type="text" id="page1-vatItemName1" placeholder="" class="vat-item-input vat-item-center"></td>
+                                    <td class="align-center"><input type="text" id="page1-vatItemSpec1" placeholder="" class="vat-item-input vat-item-center"></td>
+                                    <td><input type="text" id="page1-vatItemUnitPrice1" class="currency-input vat-item-input" placeholder="0"></td>
+                                    <td><input type="text" id="page1-vatItemQuantity1" class="currency-input vat-item-input" placeholder="0"></td>
+                                    <td><input type="text" id="page1-vatItemSupplyAmount1" class="currency-input vat-item-input" placeholder="0"></td>
+                                    <td><input type="text" id="page1-vatItemTaxAmount1" class="currency-input vat-item-tax-input" placeholder="0"></td>
+                                </tr>
+                                <tr>
+                                    <td class="align-center"><input type="text" id="page1-vatItemName2" placeholder="" class="vat-item-input vat-item-center"></td>
+                                    <td class="align-center"><input type="text" id="page1-vatItemSpec2" placeholder="" class="vat-item-input vat-item-center"></td>
+                                    <td><input type="text" id="page1-vatItemUnitPrice2" class="currency-input vat-item-input" placeholder="0"></td>
+                                    <td><input type="text" id="page1-vatItemQuantity2" class="currency-input vat-item-input" placeholder="0"></td>
+                                    <td><input type="text" id="page1-vatItemSupplyAmount2" class="currency-input vat-item-input" placeholder="0"></td>
+                                    <td><input type="text" id="page1-vatItemTaxAmount2" class="currency-input vat-item-tax-input" placeholder="0"></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <div class="vat-refund-controls">
+                            <div class="vat-refund-subtotal">
+                                <span class="vat-refund-subtotal-label">부가가치세 환급금 소계 :</span>
+                                <input type="text" id="page1-vatRefundSubtotal" readonly class="readonly vat-refund-subtotal-input">
+                            </div>
+                            <div class="vat-row-buttons">
+                                <button type="button" class="vat-add-row-btn" data-page="1">행추가</button>
+                                <button type="button" class="vat-delete-row-btn" data-page="1">행삭제</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 검증하기 버튼 -->
+                    <div class="validation-section">
+                        <button class="calculateBtn validate-button" data-page="1">계산하기</button>
+                        <button class="validateBtn validate-button" data-page="1">검증하기</button>
+                        <button class="page-delete-btn" data-page="1">현재 페이지 삭제</button>
+                        <button class="page-reset-btn" data-page="1">현재 페이지 초기화</button>
+                        <button class="page-pdf-btn" data-page="1">현재 페이지 PDF 출력</button>
+                    </div>
+                </section>
+
+                <!-- 페이지 구분선 -->
+                <div class="page-divider"></div>
+            </div>
+        </div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
